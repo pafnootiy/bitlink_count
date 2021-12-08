@@ -2,3 +2,6 @@
 .env
 img.png
 *venv
+*.idea
+*_pycache_
+.gitattributes
