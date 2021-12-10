@@ -3,7 +3,6 @@ from urllib.parse import urlparse
 import os
 from dotenv import load_dotenv
 import argparse
-# load_dotenv()
 
 
 def shorten_link(headers, url):
@@ -14,14 +13,14 @@ def shorten_link(headers, url):
     }
     response = requests.post(url_shorten, headers=headers, json=data)
     response.raise_for_status()
-    page_data = response.json()
-    return page_data.get("id")
+    response_json = response.json()
+    return response_json.get("id")
 
 
 def count_clicks(headers, url):
-    parsed = urlparse(url)
-    if url != parsed.path:
-        url = f"{parsed.hostname}{parsed.path}"
+    url_parsed = urlparse(url)
+    if url != url_parsed.path:
+        url = f"{url_parsed.hostname}{url_parsed.path}"
     url_for_count = f"https://api-ssl.bitly.com/v4/bitlinks/{url}/clicks/summary"
     params = {
         'unit': '',
@@ -34,9 +33,9 @@ def count_clicks(headers, url):
 
 
 def is_bitlink(url, headers):
-    parsed = urlparse(url)
-    if url != parsed.path:
-        url = f"{parsed.netloc}{parsed.path}"
+    url_parsed = urlparse(url)
+    if url != url_parsed.path:
+        url = f"{url_parsed.netloc}{url_parsed.path}"
     url_for_bitlink = f"https://api-ssl.bitly.com/v4/bitlinks/{url}"
     response = requests.get(url_for_bitlink, headers=headers)
     return response.ok
