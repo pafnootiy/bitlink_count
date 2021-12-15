@@ -9,7 +9,6 @@ def shorten_link(headers, url):
     url_shorten = "https://api-ssl.bitly.com/v4/shorten"
     data = {
         "long_url": url,
-        "group_guid": "Blbpm7jpC19"
     }
     response = requests.post(url_shorten, headers=headers, json=data)
     response.raise_for_status()
